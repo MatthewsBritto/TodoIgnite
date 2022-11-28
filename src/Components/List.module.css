@@ -1,0 +1,57 @@
+.container {
+   width: 46rem;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   padding: 0;
+
+   position: absolute;
+   height: 17.9rem;
+   left: calc(50% - 736px/2);
+   top: 18.18rem;
+   gap: 1.5rem;
+}
+
+.types {
+   width: 100%;
+   height: 1.18rem;
+   background: transparent;
+
+}
+
+ul {
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+   height: 1.18rem;
+}
+
+li {
+   list-style: none;
+}
+
+.listContainer {
+   width: 46rem;
+   height: 15.25rem;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   padding: 4rem 1.5rem;
+   border-radius: 8px;
+   border-top: 1px solid var(--gray-400);
+   gap: 1rem;
+}
+
+.logoEmpty {
+   width: 3.5rem;
+   height: 3.5rem;
+}
+
+p {
+   color: var(--gray-300);
+   font-size: 1rem;
+   font-weight: 700;
+   text-align: center;
+   order: 1;
+}
