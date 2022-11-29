@@ -6,7 +6,9 @@ export function Input() {
   return ( 
 
          <div className={styles.container}> 
-            <textarea name="" className={styles.textArea}/>
+            <textarea placeholder='Adicione uma nova tarefa'
+                className={styles.textArea}
+            />
             <button className={styles.newBtn}>
                Criar
                +

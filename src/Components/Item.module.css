@@ -1,0 +1,5 @@
+.item {
+   width: 46rem;
+   height: 4.5rem;
+   background-color: var(--gray-500);
+}
