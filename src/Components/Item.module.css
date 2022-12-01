@@ -15,15 +15,17 @@
 }
 
 .check {
-   width: calc(1.5rem - 1px);
-   height: calc(1.5rem - 1px);
+   width: 1rem;
+   height: 1rem;
    background-color: transparent;
-   border: 1px solid var(--purple);
+   border: 1px solid var(--blue);
    border-radius: 50%;
+   transition: all .7s ease;
 }
 
 .check:hover {
    cursor: pointer;
+   background-color: var(--blue-dark);
 }
 
 .text {
@@ -32,7 +34,7 @@
    order: 0;
 }
 
-button {
+.delItem {
    width: 1.5rem;
    height: 1.5rem;
    line-height: 0;
@@ -41,4 +43,15 @@ button {
    background-color: transparent;
    color: var(--gray-300);
    border: none;
+   transition: all .7s ease;
+   line-height: 0;
+}
+
+.delItem:hover {
+   color: var(--danger);
+   background-color: var(--gray-400);
+}
+
+.delItem svg {
+   font-size: 47px;
 }

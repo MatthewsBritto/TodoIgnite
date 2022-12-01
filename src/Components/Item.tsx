@@ -10,8 +10,8 @@ export function Item(){
         <p className={styles.text}>
         Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.
         </p>
-        <button>
-          <Trash size={24}/>
+        <button className={styles.delItem}>
+          <Trash size={18}/>
         </button>
       </div>
    
