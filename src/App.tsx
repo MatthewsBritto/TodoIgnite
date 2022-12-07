@@ -1,4 +1,4 @@
-import { useState,ChangeEvent } from 'react';
+import React,{ useState,ChangeEvent,MouseEvent } from 'react';
 
 import { Header }  from './Components/Header';
 import { Item }  from './Components/Item';
@@ -19,19 +19,24 @@ export interface todoProps {
 
 function App() {
   
-  const [todoItems,setTodoItems] = useState<todoProps[]>([]);
+  const [todoItems,setTodoItems] = useState<string[]>([]);
   
   const [newTodoText, setNewTodoText] = useState('');
   
 
 
   function handleNewText(event:ChangeEvent<HTMLTextAreaElement>){
-
+    //pegar nova tarefa
     setNewTodoText(event.target.value);
   }
-  function handleGetNewTodoText() {
+  function handleGetNewTodoText(event:MouseEvent){
     // setar nova tarefa
-    console.log(newTodoText);
+    event.preventDefault();
+
+    setTodoItems([...todoItems,newTodoText]);
+    console.log(todoItems);
+
+    setNewTodoText('');
   }
 
 
@@ -45,13 +50,16 @@ function App() {
 
 
       <div className={styles.container}> 
-            <textarea placeholder='Adicione uma nova tarefa...'
+            <textarea 
+               placeholder='Adicione uma nova tarefa...'
                onChange={handleNewText}
                className={styles.textArea}
+               value={newTodoText}
             />
             <button 
                className={styles.newBtn}
                onClick={handleGetNewTodoText}
+               type='submit'
                >
                Criar
                +
