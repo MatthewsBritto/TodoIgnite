@@ -7,6 +7,7 @@ import { Item }  from './Components/Item';
 import logoEmpty from './assets/Clipboard.png'
 import styles from "./App.module.css";
 import './global.css';
+import Container from './Components/Container';
 
 export interface todoProps {
 
@@ -23,9 +24,10 @@ function App() {
   
   const [newTodoText, setNewTodoText] = useState('');
   
+  const counterItems = todoItems.length
 
   function handleNewText(event:ChangeEvent<HTMLTextAreaElement>){
-
+    //pegar texto input
     setNewTodoText(event.target.value);
   }
   function handleGetNewTodoText(event:MouseEvent){
@@ -34,6 +36,13 @@ function App() {
     event.preventDefault();
     setTodoItems([...todoItems,newTodoText]);
     setNewTodoText('')
+  }
+  function onDeleteItem(ItemToDelete:string){
+
+    const newListitems = todoItems.filter(
+      item => {return item !== ItemToDelete})
+
+      setTodoItems(newListitems)
 
   }
 
@@ -66,18 +75,22 @@ function App() {
             <header className={styles.types}>
                <a>    
                     Tarefas Criadas
-                  <span className={styles.counter}>0</span>
+                  <span className={styles.counter}>
+                    {counterItems}
+                  </span>
                </a> 
                <a> 
                         Concluídas 
-                  <span className={styles.counter}>0</span>
+                  <span className={styles.counter}>
+                    0
+                  </span>
                </a>
             </header>
 
 
           {todoItems.length === 0 ? (
 
-              <div className={styles.itemsContainer}> 
+              <Container hasItems={false} > 
                         
                         <img className={styles.logoEmpty} src={logoEmpty}/>
                         <p>
@@ -87,17 +100,22 @@ function App() {
                           <br/>
                           Crie tarefas e organize seus itens a fazer   
                       </p>
-              </div>
+              </Container>
           ) : (
 
-            <div className={styles.itemsContainer}> 
+            <Container hasItems={true}> 
 
-              {todoItems.map( item => {
-                return <Item/>
-
+              {todoItems.map(item => {
+                return (
+                <Item 
+                  key={item}
+                  content={item}
+                  onDeleteItem={onDeleteItem}
+                />
+                )
               })}
 
-            </div>
+            </Container>
           )}
       </section>
     </div>
