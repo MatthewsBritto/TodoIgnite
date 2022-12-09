@@ -22,7 +22,7 @@ function App() {
   
   const [todoItems,setTodoItems] = useState<todoProps[]>([]);
   
-  const [newTodoText, setNewTodoText] = useState('');
+  const [newTodoText, setNewTodoText] = useState<todoProps>({}as todoProps);
 
   const [itemsChecked, setItemsChecked] = useState(0);
   
@@ -34,12 +34,11 @@ function App() {
     //pegar texto input
     setNewTodoText(event.target.value);
   }
-  function handleGetNewTodoText(event:MouseEvent){
-    // setar nova tarefa
-  
+  function handleGetNewTodoText(event:MouseEvent, {content, id, finished}:todoProps){
+    // setar nova tarefa  
     event.preventDefault();
     setTodoItems([...todoItems,newTodoText]);
-    setNewTodoText('')
+    setNewTodoText({} as todoProps)
   }
   function onDeleteItem(ItemToDelete:string){
 
