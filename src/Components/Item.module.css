@@ -21,10 +21,28 @@
    background-color: transparent;
    border: 1px solid var(--blue);
    border-radius: 50%;
-   transition: all .7s ease;
+   transition: all .3s ease;
+   font-size: 60px;
 }
 
-.check:hover {
+.checkNo {
+
+   width: 1rem;
+   height: 1rem;
+   background-color: var(--purple-dark);
+   border: 1px solid var(--purple-dark);
+   border-radius: 50%;
+   color: var(--gray-100);
+   transition: all .3s ease;
+   font-weight: bolder;
+}
+
+.checkNo svg {
+   width: 100%;
+}
+
+.check:hover,
+.checkNo:hover {
    cursor: pointer;
    background-color: var(--blue-dark);
 }
@@ -34,6 +52,16 @@
    color: var(--gray-100);
    font-size: .87rem;
    order: 0;
+   text-transform: capitalize;
+}
+
+.textFinished {
+   width: 39.5rem;
+   /* color: var(--gray-500); */
+   font-size: .87rem;
+   order: 0;
+   text-decoration: line-through;
+   text-transform: capitalize;
 }
 
 .delItem {

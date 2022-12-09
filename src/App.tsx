@@ -20,11 +20,15 @@ export interface todoProps {
 
 function App() {
   
-  const [todoItems,setTodoItems] = useState<string[]>([]);
+  const [todoItems,setTodoItems] = useState<todoProps[]>([]);
   
   const [newTodoText, setNewTodoText] = useState('');
+
+  const [itemsChecked, setItemsChecked] = useState(0);
   
-  const counterItems = todoItems.length
+  const counterItems = todoItems.length;
+
+
 
   function handleNewText(event:ChangeEvent<HTMLTextAreaElement>){
     //pegar texto input
@@ -45,7 +49,7 @@ function App() {
       setTodoItems(newListitems)
 
   }
-
+  
 
 
   return (
@@ -57,7 +61,8 @@ function App() {
 
 
       <div className={styles.container}> 
-            <textarea placeholder='Adicione uma nova tarefa...'
+            <textarea 
+               placeholder='Adicione uma nova tarefa...'
                onChange={handleNewText}
                className={styles.textArea}
                value={newTodoText}
@@ -74,15 +79,15 @@ function App() {
       <section className={styles.listContainer}>
             <header className={styles.types}>
                <a>    
-                    Tarefas Criadas
+                  Tarefas Criadas
                   <span className={styles.counter}>
                     {counterItems}
                   </span>
                </a> 
                <a> 
-                        Concluídas 
+                  Concluídas 
                   <span className={styles.counter}>
-                    0
+                    {itemsChecked}
                   </span>
                </a>
             </header>
@@ -108,8 +113,8 @@ function App() {
               {todoItems.map(item => {
                 return (
                 <Item 
-                  key={item}
-                  content={item}
+                  key={item.content}
+                  content={item.content}
                   onDeleteItem={onDeleteItem}
                 />
                 )

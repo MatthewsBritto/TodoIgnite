@@ -1,14 +1,18 @@
-import React, { HtmlHTMLAttributes } from 'react';
+import  { DOMAttributes} from 'react';
 
 import styles from './Container.module.css';
 
-interface containerProps extends HtmlHTMLAttributes<Boolean>{
-   hasItems?:boolean;
+interface ContainerProps extends DOMAttributes<HTMLElement> {
+  hasItems: boolean;
 }
 
-export default function({hasItems= true}:containerProps){
+
+export default function({hasItems, children}:ContainerProps){
   return (
-  <div className={hasItems ? styles.itemsContainerSp : styles.itemsContainer}> 
+  <div 
+    className={hasItems ? styles.itemsContainerSp : styles.itemsContainer}> 
+
+    {children}
 
   </div>);
 }
