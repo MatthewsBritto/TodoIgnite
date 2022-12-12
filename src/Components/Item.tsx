@@ -5,26 +5,29 @@ import styles from './Item.module.css'
 
 interface itemProps{
   content:string;
-  key:string;
-  onDeleteItem: (item:string) => void;
+  id:string;
+  onDeleteItem: (id:string) => void;
+  onCheckItem: (finished:boolean) => void;
+  finished: boolean;
   
 }
 
 
-export function Item({content,onDeleteItem,key}:itemProps){
+export function Item({content,onDeleteItem,id,finished, onCheckItem}:itemProps){
 
-  const [itsFinished,setItsFinished] = useState(false);
+  const [ itsFinished, setItsFinished] = useState(finished);
+  
 
   function handleDeleteItem() {
-    onDeleteItem(content)
+    onDeleteItem(id)
   }
 
-  function handleCheckItem(itsFinished:boolean){
-    setItsFinished(!itsFinished);
+  function handleCheckItem(finished:boolean){
+    setItsFinished(!finished)
   }
 
   return (
-      <div className={styles.item} key={key}>
+      <div className={styles.item} key={id}>
         <button 
           className={itsFinished ?  styles.checkNo  : styles.check }
           onClick={(event:any) => handleCheckItem(itsFinished)}

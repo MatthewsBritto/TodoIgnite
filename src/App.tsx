@@ -22,7 +22,7 @@ function App() {
   
   const [todoItems,setTodoItems] = useState<todoProps[]>([]);
   
-  const [newTodoText, setNewTodoText] = useState<todoProps>({}as todoProps);
+  const [newTodoText, setNewTodoText] = useState('');
 
   const [itemsChecked, setItemsChecked] = useState(0);
   
@@ -34,19 +34,32 @@ function App() {
     //pegar texto input
     setNewTodoText(event.target.value);
   }
-  function handleGetNewTodoText(event:MouseEvent, {content, id, finished}:todoProps){
+  function handleCreateNewTodo(event:MouseEvent){
+
     // setar nova tarefa  
+
+    const newTodo = {
+      content: newTodoText,
+      id:newTodoText,
+      finished:false
+    }
+
     event.preventDefault();
-    setTodoItems([...todoItems,newTodoText]);
-    setNewTodoText({} as todoProps)
+    setTodoItems([...todoItems,newTodo]);
+    setNewTodoText('')
   }
-  function onDeleteItem(ItemToDelete:string){
+  function onDeleteItem(id:string){
 
     const newListitems = todoItems.filter(
-      item => {return item !== ItemToDelete})
+      item => {return item.id !== id})
 
-      setTodoItems(newListitems)
+      setTodoItems(newListitems);
 
+  }
+  function onCheckItem (finished:boolean) {
+    const itemChecked = !finished  
+
+    console.log(itemsChecked);
   }
   
 
@@ -68,7 +81,7 @@ function App() {
             />
             <button 
                className={styles.newBtn}
-               onClick={handleGetNewTodoText}
+               onClick={handleCreateNewTodo}
                >
                Criar
                +
@@ -112,9 +125,11 @@ function App() {
               {todoItems.map(item => {
                 return (
                 <Item 
-                  key={item.content}
+                  id={item.id}
                   content={item.content}
+                  finished={item.finished}
                   onDeleteItem={onDeleteItem}
+                  onCheckItem={onCheckItem}
                 />
                 )
               })}
