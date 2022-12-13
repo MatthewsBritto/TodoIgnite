@@ -7,7 +7,7 @@ interface itemProps{
   content:string;
   id:string;
   onDeleteItem: (id:string) => void;
-  onCheckItem: (finished:boolean) => void;
+  onCheckItem: (finished:boolean,id:string) => void;
   finished: boolean;
   
 }
@@ -22,15 +22,16 @@ export function Item({content,onDeleteItem,id,finished, onCheckItem}:itemProps){
     onDeleteItem(id)
   }
 
-  function handleCheckItem(finished:boolean){
-    setItsFinished(!finished)
+  function handleCheckItem(itsDone:boolean,id:string) {
+    setItsFinished(!itsDone);
+    onCheckItem(!itsDone,id);
   }
 
   return (
       <div className={styles.item} key={id}>
         <button 
           className={itsFinished ?  styles.checkNo  : styles.check }
-          onClick={(event:any) => handleCheckItem(itsFinished)}
+          onClick={(event:any) => handleCheckItem(itsFinished,id)}
 
         >
           {itsFinished ? <Check weight={'bold'}/>  : '' }

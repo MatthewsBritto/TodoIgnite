@@ -1,4 +1,4 @@
-import { useState,ChangeEvent,MouseEvent  } from 'react';
+import { useState,ChangeEvent,MouseEvent, useEffect  } from 'react';
 
 import { Header }  from './Components/Header';
 import { Item }  from './Components/Item';
@@ -28,6 +28,10 @@ function App() {
   
   const counterItems = todoItems.length;
 
+  useEffect(()=>{
+    howItensChecked()
+    
+  },[todoItems])
 
 
   function handleNewText(event:ChangeEvent<HTMLTextAreaElement>){
@@ -56,10 +60,26 @@ function App() {
       setTodoItems(newListitems);
 
   }
-  function onCheckItem (finished:boolean) {
-    const itemChecked = !finished  
+  function onCheckItem (itsDone:boolean,id:string) { 
 
-    console.log(itemsChecked);
+    // receber a lista primeiro e alterar a mesma dentro da função
+
+    const localTodoItems = [...todoItems]
+    const checkedTodoItemsIndex = todoItems.findIndex(item => {return item.id === id})
+    if(checkedTodoItemsIndex < 0) return;
+
+    localTodoItems[checkedTodoItemsIndex].finished = itsDone;
+
+    setTodoItems(localTodoItems)
+    
+  
+  }
+  function howItensChecked(){
+
+    const newListCheckeditems = 
+    todoItems.filter(item => {return item.finished === true})
+
+    setItemsChecked(newListCheckeditems.length)
   }
   
 
