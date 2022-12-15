@@ -1,4 +1,4 @@
-import React, { useState , MouseEvent, MouseEventHandler} from 'react';
+import React, { useState , MouseEvent, MouseEventHandler,useEffect} from 'react';
 import {Trash,Check} from 'phosphor-react'
 
 import styles from './Item.module.css'
@@ -14,31 +14,32 @@ interface itemProps{
 
 
 export function Item({content,onDeleteItem,id,finished, onCheckItem}:itemProps){
-
-  const [ itsFinished, setItsFinished] = useState(finished);
   
 
   function handleDeleteItem() {
-    onDeleteItem(id)
+    // setItsFinished(false);
+    onDeleteItem(id);
+
   }
 
   function handleCheckItem(itsDone:boolean,id:string) {
-    setItsFinished(!itsDone);
+    // setItsFinished(!itsDone);
     onCheckItem(!itsDone,id);
   }
+
 
   return (
       <div className={styles.item} key={id}>
         <button 
-          className={itsFinished ?  styles.checkNo  : styles.check }
-          onClick={(event:any) => handleCheckItem(itsFinished,id)}
+          className={finished ?  styles.checkNo  : styles.check }
+          onClick={(event:any) => handleCheckItem(finished,id)}
 
         >
-          {itsFinished ? <Check weight={'bold'}/>  : '' }
+          {finished ? <Check weight={'bold'}/>  : '' }
 
         </button>
         <p 
-          className={itsFinished ? styles.textFinished : styles.text}>
+          className={finished ? styles.textFinished : styles.text}>
           {content}
         </p>
         <button 

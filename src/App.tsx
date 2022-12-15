@@ -2,7 +2,7 @@ import { useState,ChangeEvent,MouseEvent, useEffect  } from 'react';
 
 import { Header }  from './Components/Header';
 import { Item }  from './Components/Item';
-
+import {PlusCircle} from 'phosphor-react'
 
 import logoEmpty from './assets/Clipboard.png'
 import styles from "./App.module.css";
@@ -25,6 +25,8 @@ function App() {
   const [newTodoText, setNewTodoText] = useState('');
 
   const [itemsChecked, setItemsChecked] = useState(0);
+
+  
   
   const counterItems = todoItems.length;
 
@@ -54,9 +56,11 @@ function App() {
   }
   function onDeleteItem(id:string){
 
+    
     const newListitems = todoItems.filter(
       item => {return item.id !== id})
-
+      
+      
       setTodoItems(newListitems);
 
   }
@@ -83,7 +87,6 @@ function App() {
   }
   
 
-
   return (
 
     <div className={styles.App}>
@@ -103,8 +106,8 @@ function App() {
                className={styles.newBtn}
                onClick={handleCreateNewTodo}
                >
-               Criar
-               +
+               <h4>Criar</h4>
+               <PlusCircle size={26}/>
             </button>
       </div>  
 
@@ -118,9 +121,20 @@ function App() {
                </a> 
                <a> 
                   Concluídas 
-                  <span className={styles.counter}>
+
+                  {itemsChecked === 0 ? (
+                    <span className={styles.counter}>
+
                     {itemsChecked}
+                    
                   </span>
+                  ):
+                  (<span className={styles.counter}>
+
+                    {itemsChecked} de {counterItems}
+                    
+                  </span>)}
+                  
                </a>
             </header>
 
