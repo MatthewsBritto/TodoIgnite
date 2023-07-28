@@ -9,11 +9,16 @@ import styles from "./App.module.css";
 import './global.css';
 import Container from './Components/Container';
 
+import axios from 'axios';
+
 export interface todoProps {
 
-  content:string;
-  id:string;
-  finished:boolean;
+  taskId: string,
+  title:string,
+  description:string,
+  completed_at: string | null,
+  created_at: string,
+  update_at:  string | null
 }
 
 
@@ -26,13 +31,25 @@ function App() {
 
   const [itemsChecked, setItemsChecked] = useState(0);
 
-  
+  function fetchTaskData () {
+      axios.get('//localhost:3001/tasks')
+       .then(res =>  setTodoItems(res.data) )
+       .catch(err => console.log(err))
+
+       
+  }
+
+
+
   
   const counterItems = todoItems.length;
 
-  useEffect(()=>{
+  useEffect( () => {
+    fetchTaskData()
+  },[])
+
+  useEffect( () => {
     howItensChecked()
-    
   },[todoItems])
 
 
@@ -40,48 +57,53 @@ function App() {
     //pegar texto input
     setNewTodoText(event.target.value);
   }
+
   function handleCreateNewTodo(event:MouseEvent){
 
     // setar nova tarefa  
 
     const newTodo = {
-      content: newTodoText,
-      id:newTodoText,
-      finished:false
+      title: newTodoText,
+      description:newTodoText
     }
 
     event.preventDefault();
-    setTodoItems([...todoItems,newTodo]);
-    setNewTodoText('')
-  }
-  function onDeleteItem(id:string){
-
+    axios.post('//localhost:3001/tasks', JSON.stringify(newTodo))
+    .then(res => fetchTaskData())
+    .then(res => setNewTodoText(''))
+    .catch(err => console.log(err))
     
-    const newListitems = todoItems.filter(
-      item => {return item.id !== id})
-      
-      
-      setTodoItems(newListitems);
-
   }
+
+  function onDeleteItem(id:string) {
+    
+      axios.delete(`//localhost:3001/tasks/${id}`)
+      .then( res => fetchTaskData())
+      .catch(err => console.log(err))
+   
+  }
+
   function onCheckItem (itsDone:boolean,id:string) { 
 
     // receber a lista primeiro e alterar a mesma dentro da função
 
-    const localTodoItems = [...todoItems]
-    const checkedTodoItemsIndex = todoItems.findIndex(item => {return item.id === id})
-    if(checkedTodoItemsIndex < 0) return;
+    // const localTodoItems = [...todoItems]
+    // const checkedTodoItemsIndex = todoItems.findIndex(item => { return item.taskId === id })
+    // if(checkedTodoItemsIndex < 0) return;
 
-    localTodoItems[checkedTodoItemsIndex].finished = itsDone;
-
-    setTodoItems(localTodoItems)
     
-  
+    // setTodoItems(localTodoItems)
+    
+    axios.patch(`//localhost:3001/tasks/${id}/complete`)
+    .then( res => fetchTaskData())
+    .catch(err => console.log(err))
+    
+    
   }
   function howItensChecked(){
 
     const newListCheckeditems = 
-    todoItems.filter(item => {return item.finished === true})
+    todoItems.filter(item => {return item.completed_at ? true : false})
 
     setItemsChecked(newListCheckeditems.length)
   }
@@ -159,9 +181,10 @@ function App() {
               {todoItems.map(item => {
                 return (
                 <Item 
-                  id={item.id}
-                  content={item.content}
-                  finished={item.finished}
+                  key={item.taskId}
+                  id={item.taskId}
+                  content={item.description}
+                  finished={item.completed_at ? true : false}
                   onDeleteItem={onDeleteItem}
                   onCheckItem={onCheckItem}
                 />

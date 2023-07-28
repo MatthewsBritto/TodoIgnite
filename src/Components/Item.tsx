@@ -13,8 +13,8 @@ interface itemProps{
 }
 
 
-export function Item({content,onDeleteItem,id,finished, onCheckItem}:itemProps){
-  
+export function Item( { content,onDeleteItem,id,finished, onCheckItem } : itemProps) {
+   
 
   function handleDeleteItem() {
     // setItsFinished(false);
